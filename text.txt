@@ -1,0 +1,57 @@
+# 開発環境で実行
+perl mojo/script/morbo myapp.pl
+
+
+# 本番環境で実行
+perl mojo/script/hypnotoad myapp.pl
+
+# 公開の方法
+
+1. ドメインを取得する
+
+　お名前ドットコムなどで、ドメインを取得します。
+  たとえばgoogeleだとgoogle.comみたいなものです。
+
+2. DNSサーバーの設定
+
+　ドメインと、サーバーのIPアドレスをひもづけます
+　somehost.com -> 201.223.1.23 のように
+
+3. サーバーをレンタルします。VPSというサービスが安い!
+
+　さくらVPSなどで、サーバーをレンタルします。
+
+4. HTTPサーバーをインストールします。
+
+   CentOSの場合は
+   
+   yum -y install httpd
+   
+   起動は
+
+   service httpd start
+   
+   停止は
+   
+   service httpd stop
+
+5. バーチャルホストという機能を使ってリバースプロキシの設定を書きます
+
+  「/etc/httpd/cond.d」の中に配置。
+
+  <VirtualHost *:80>
+    ServerName somehost.com
+    <Proxy *>
+      Order deny,allow
+      Allow from all
+    </Proxy>
+    ProxyRequests Off
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:8080/ keepalive=On
+    ProxyPassReverse / http://localhost:8080/
+  </VirtualHost>
+
+6. hypnotoadコマンドでサーバーを起動
+
+  hypnotoad myapp.pl
+

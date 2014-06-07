@@ -1,6 +1,0 @@
-# 開発環境で実行
-perl mojo/script/morbo myapp.pl
-
-
-# 本番環境で実行
-perl mojo/script/hypnotoad myapp.pl
