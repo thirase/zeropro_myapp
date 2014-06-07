@@ -25,6 +25,7 @@ __DATA__
 <html>
   <head>
     <meta charset="UTF-8">
+    %= javascript '/js/jquery-1.11.1.js';
     <title>越谷 ゼロプロ #7</title>
   </head>
   <body>
